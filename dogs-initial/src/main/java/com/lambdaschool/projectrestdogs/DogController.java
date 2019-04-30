@@ -1,5 +1,6 @@
 package com.lambdaschool.projectrestdogs;
 
+import com.lambdaschool.projectrestdogs.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,17 +24,35 @@ public class DogController
     // localhost:8080/dogs/{id}
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getDogDetail(@PathVariable long id)
-    {
-        Dog rtnDog = ProjectrestdogsApplication.ourDogList.findDog(d -> (d.getId() == id));
+    {   Dog rtnDog;
+        if (ProjectrestdogsApplication.ourDogList.findDog(d -> (d.getId()) == id) == null )
+        {
+            throw new ResourceNotFoundException("Dog with id "+id+" not found.");
+        }
+        else {
+            rtnDog = ProjectrestdogsApplication.ourDogList.findDog(d -> (d.getId() == id));
+        }
+
+
+
         return new ResponseEntity<>(rtnDog, HttpStatus.OK);
     }
 
     // localhost:8080/dogs/breeds/{breed}
     @GetMapping(value = "/breeds/{breed}")
+
     public ResponseEntity<?> getDogBreeds (@PathVariable String breed)
+
     {
-        ArrayList<Dog> rtnDogs = ProjectrestdogsApplication.ourDogList.
-                findDogs(d -> d.getBreed().toUpperCase().equals(breed.toUpperCase()));
-        return new ResponseEntity<>(rtnDogs, HttpStatus.OK);
+
+
+                ArrayList<Dog> rtnDogs = ProjectrestdogsApplication.ourDogList.
+                        findDogs(d -> d.getBreed().toUpperCase().equals(breed.toUpperCase()));
+
+                return new ResponseEntity<>(rtnDogs, HttpStatus.OK);
+
+
+
+
     }
 }
