@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 
@@ -59,5 +60,14 @@ public class DogController
 
 
 
+    }
+
+    @GetMapping(value = "/dogtable")
+    public ModelAndView displayDogTable()
+    {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("dogs");
+        mav.addObject("dogList", ProjectrestdogsApplication.ourDogList.dogList);
+        return mav;
     }
 }
