@@ -1,9 +1,13 @@
 package com.lambdaschool.projectrestdogs;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Dog
 {
+    private static final Logger logger = LoggerFactory.getLogger(Dog.class);
     private static final AtomicLong counter = new AtomicLong();
     private long id;
     private String breed;
@@ -16,6 +20,8 @@ public class Dog
         this.breed = breed;
         this.weight = weight;
         this.apartmentSuitable = apartmentSuitable;
+        logger.info("MAKING A DOG");
+        logger.debug("We created a dog "+this.breed);
     }
 
     public Dog(Dog toClone)
@@ -59,5 +65,10 @@ public class Dog
     public void setApartmentSuitable(boolean apartmentSuitable)
     {
         this.apartmentSuitable = apartmentSuitable;
+    }
+
+    @Override
+    public String toString() {
+        return "Dog{" + "id=" + id + ", breed='" + breed + '\'' + ", weight=" + weight + ", apartmentSuitable=" + apartmentSuitable + '}';
     }
 }
